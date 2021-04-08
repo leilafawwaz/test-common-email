@@ -263,4 +263,11 @@ public class EmailTest {
 			assertEquals(time, email.getSocketConnectionTimeout());
 		}
 		
+		 // setFrom test
+		@Test
+		public void testSetFrom() throws Exception {
+			
+			assertEquals(email, email.setFrom(TEST_EMAILS[1]));
+			
+		}
 }
