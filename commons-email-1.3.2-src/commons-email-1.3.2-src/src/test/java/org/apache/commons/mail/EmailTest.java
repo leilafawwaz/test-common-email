@@ -180,4 +180,35 @@ public class EmailTest {
 	     	email.buildMimeMessage();
 	     	
 		}
+		
+		// getHostName tests
+		@Test
+		public void testGetHostName() {
+			
+			email.setHostName("local host");
+			String hostname = email.getHostName();
+			
+			assertEquals("local host", hostname);
+		}
+		
+		@Test
+		public void testGetHostNameEmpty() {
+			
+			email.setHostName(null);
+			String hostname = email.getHostName();
+			
+			assertEquals(null, hostname);
+		}
+		
+		@Test()
+		public void testGetHostNameSession() {
+			
+			Properties prop = new Properties();
+			Session session = Session.getDefaultInstance(prop,null);
+			prop.put(EmailConstants.MAIL_HOST, "ll.host");
+			email.setMailSession(session);
+			
+			assertEquals("ll.host", email.getHostName());
+		}
+		
 }
