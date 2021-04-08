@@ -211,4 +211,26 @@ public class EmailTest {
 			assertEquals("ll.host", email.getHostName());
 		}
 		
+		// getMailSession tests
+		@Test
+		public void testGetMailSession() throws EmailException {
+			
+			email.setHostName("testHost");
+			email.setAuthentication("user", "pass");
+			email.setBounceAddress("bounce@j.com");
+			email.setSSLOnConnect(true);
+			email.setStartTLSEnabled(true);
+			email.setSSLCheckServerIdentity(true);
+			
+			email.getMailSession();
+		}
+		
+		@Test(expected = EmailException.class)
+		public void testGetMailSessionEmptyHost() throws EmailException {
+			
+			email.setHostName(null);
+			
+			email.getMailSession();
+		}
+		
 }
