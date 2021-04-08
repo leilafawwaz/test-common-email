@@ -253,5 +253,14 @@ public class EmailTest {
 			assertEquals (date, email.getSentDate());
 		}
 
+		// getSocketConnectionTimeout tests
+		@Test
+		public void testGetSocketConnectionTimeOut() {
+			
+			int time = 20;
+			email.setSocketConnectionTimeout(time);
+			
+			assertEquals(time, email.getSocketConnectionTimeout());
+		}
 		
 }
