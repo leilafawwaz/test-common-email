@@ -88,4 +88,13 @@ public class EmailTest {
 			
 			assertEquals(0, email.getHeaders().size());
 		}
+		
+		// addReplyTo tests
+		@Test
+		public void testAddReplyTo() throws Exception {
+			
+			email.addReplyTo(TEST_EMAILS[1], Test_Names[2]);
+			
+			assertEquals(1, email.getReplyToAddresses().size());
+		}
 }
