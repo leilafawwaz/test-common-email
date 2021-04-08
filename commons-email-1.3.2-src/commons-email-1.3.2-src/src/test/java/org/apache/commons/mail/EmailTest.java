@@ -2,6 +2,10 @@ package org.apache.commons.mail;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Properties;
+
+import javax.mail.Session;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,5 +100,84 @@ public class EmailTest {
 			email.addReplyTo(TEST_EMAILS[1], Test_Names[2]);
 			
 			assertEquals(1, email.getReplyToAddresses().size());
+		}
+		
+		// buildMimeMessage tests
+		@Test
+		public void testBuildMimeMessage() throws EmailException {
+			
+			email.setHostName("local host");
+			email.setSmtpPort(1234);
+			email.setFrom("abc@d.com");
+			email.addTo("lulu@cd.com");
+			email.setSubject("test email");
+			
+	     	email.setContent("test content", "text/plain");
+	     	
+	     	email.addCc("test@b.com");
+	     	email.addBcc("te@jd.com");
+	     	email.addHeader("testHead", "aBc");
+	     
+	     	email.addReplyTo("reply@b.com");
+	     	
+			email.buildMimeMessage();
+		}
+
+		@Test(expected = IllegalStateException.class)
+		public void testBuildMimeMessageException() throws EmailException {
+			
+			Properties prop = new Properties();
+			Session session = Session.getDefaultInstance(prop,null);
+			prop.put(EmailConstants.MAIL_HOST, "ll.host");
+			
+			email.setHostName("local host");
+			
+		    email.message=email.createMimeMessage(session);
+			
+			email.buildMimeMessage();
+		}
+		
+		@Test
+		public void testBuildMimeMessageNullContent() throws EmailException {
+		
+			email.setHostName("local host");
+			email.setSmtpPort(1234);
+			email.setFrom("abc@d.com");
+			email.addTo("lulu@cd.com");
+			email.setSubject("test email");
+			
+	 		
+	     	email.setContent(null);
+	     	
+	     	
+	     	email.buildMimeMessage();
+	     	
+		}
+		
+		@Test(expected=EmailException.class)
+		public void testBuildMimeMessageNull() throws EmailException {
+		
+			email.setHostName("local host");
+	     	
+	     	email.buildMimeMessage();
+	     	
+		}
+		
+		@Test(expected=EmailException.class)
+		public void testBuildMimeMessage2() throws EmailException {
+		
+			email.setHostName("local host");
+	 		email.setSmtpPort(1234);
+			email.setFrom("abc@d.com");
+			email.setSubject("test email");
+			
+	     	email.setContent("test content", "text/plain");
+	     	
+	     	email.addHeader("testHead", "aBc");
+	     
+	     	email.addReplyTo("ab@co");
+	     	
+	     	email.buildMimeMessage();
+	     	
 		}
 }
